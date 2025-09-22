@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Détails du produit</title>
+  <style>
+    /* --- styles (inchangés) --- */
+    .carousel {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.4s ease-in-out;
+    }
+
+    .carousel img {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      flex-shrink: 0;
+    }
+
+    .carousel-button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: rgba(0, 0, 0, 0.5);
+      border: none;
+      color: white;
+      padding: 10px 15px;
+      cursor: pointer;
+      font-size: 18px;
+      z-index: 10;
+      border-radius: 50%;
+    }
+
+    .carousel-button.prev {
+      left: 10px;
+    }
+
+    .carousel-button.next {
+      right: 10px;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #f4f7fa;
+      margin: 0;
+      padding: 20px;
+      color: #333;
+    }
+
+    h2 {
+      text-align: center;
+      color: #333;
+      margin-bottom: 30px;
+      font-weight: 600;
+      font-size: 30px;
+    }
+
+    .product-details {
+      max-width: 900px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+      font-size: 16px;
+    }
+
+    .product-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 12px;
+    }
+
+    .product-info {
+      padding: 20px 0;
+      font-size: 16px;
+    }
+
+    .product-info h3 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 15px;
+    }
+
+    .product-description {
+      font-size: 16px;
+      margin-bottom: 15px;
+    }
+
+    .product-category,
+    .product-subcategory,
+    .product-price {
+      font-size: 18px;
+      margin-bottom: 12px;
+      color: #555;
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 12px 20px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      font-weight: 600;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: #0056b3;
+    }
+
+    #orderButton {
+      display: inline-block;
+      padding: 8px 15px;
+      background-color: #28a745;
+      color: #fff;
+      text-align: center;
+      border-radius: 50px;
+      font-size: 18px;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-top: 20px;
+      margin-bottom: 10px;
+    }
+
+    #orderButton:hover {
+      background-color: #218838;
+      transform: translateY(-2px);
+    }
+
+    #orderButton:active {
+      background-color: #1e7e34;
+      transform: translateY(2px);
+    }
+
+    #orderButton:focus {
+      outline: none;
+    }
+
+    .order-popup,
+    .confirmation-popup {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+
+    .popup-content {
+      background: #fff;
+      padding: 40px;
+      border-radius: 12px;
+      width: 100%;
+      max-width: 600px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .popup-content input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 16px;
+    }
+
+    .popup-content button {
+      padding: 12px 20px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .popup-content button:hover {
+      background-color: #218838;
+    }
+
+    .confirmation-content img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-content p {
+      font-size: 18px;
+      color: #333;
+      margin-bottom: 10px;
+    }
+
+    .confirmation-content .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .confirmation-content .buttons button {
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .confirmation-content .buttons .confirm {
+      background-color: #28a745;
+    }
+
+    .confirmation-content .buttons .cancel {
+      background-color: #dc3545;
+    }
+
+    .confirmation-content .buttons button:hover {
+      background-color: #218838;
+    }
+
+    .confirmation-content .buttons .cancel:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="product-details">
+    <h2>Détails du produit</h2>
+    <div id="productDetails"></div>
+    <button id="orderButton">Passer la commande</button>
+    <a href="Produits.html" class="back-button">Retour à la liste</a>
+  </div>
+
+  <!-- Popup de commande -->
+  <div id="orderPopup" class="order-popup">
+    <div class="popup-content">
+      <h3>Formulaire de commande</h3>
+      <input type="text" id="name" placeholder="Nom" />
+      <input type="text" id="surname" placeholder="Prénom" />
+      <input type="email" id="email" placeholder="Email" />
+      <input type="tel" id="phone" placeholder="Numéro de téléphone" />
+      <button id="submitOrder">Soumettre</button>
+    </div>
+  </div>
+
+  <!-- Popup de confirmation -->
+  <div id="confirmationPopup" class="confirmation-popup">
+    <div class="popup-content confirmation-content">
+      <img id="confirmImage" src="" alt="Image du produit" />
+      <p id="confirmName"></p>
+      <p id="confirmCategory"></p>
+      <p id="confirmSubcategory"></p>
+      <p id="confirmDescription"></p>
+      <p id="confirmPrice"></p>
+      <div class="buttons">
+        <button id="confirmButton" class="confirm">Confirmer la commande</button>
+        <button id="cancelButton" class="cancel">Annuler</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Import EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getFirestore, doc, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDs-3TYY-ituu4GqtBbPdFzcH6XYkdEB3o",
+      authDomain: "maintenanceinformatique-d9b17.firebaseapp.com",
+      projectId: "maintenanceinformatique-d9b17",
+      storageBucket: "maintenanceinformatique-d9b17.firebasestorage.app",
+      messagingSenderId: "271885214932",
+      appId: "1:271885214932:web:e26b80eb6ff3dce0228741"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const productId = urlParams.get('id');
+    let productData = {};
+
+    async function getProductDetails() {
+      if (!productId) {
+        alert("Produit introuvable !");
+        return;
+      }
+      try {
+        const docRef = doc(db, "produits", productId);
+        const docSnap = await getDoc(docRef);
+
+        if (docSnap.exists()) {
+          productData = docSnap.data();
+          const productDetails = document.getElementById('productDetails');
+          let imagesHTML = "";
+
+          if (Array.isArray(productData.images) && productData.images.length > 0) {
+            const images = productData.images.map((url, i) =>
+              `<img src="${url}" alt="Image ${i + 1}" />`
+            ).join("");
+
+            imagesHTML = `
+              <div class="carousel">
+                <div class="carousel-track">
+                  ${images}
+                </div>
+                <button class="carousel-button prev">&#10094;</button>
+                <button class="carousel-button next">&#10095;</button>
+              </div>`;
+          } else {
+            imagesHTML = `<img src="https://via.placeholder.com/300x200?text=Pas+d'image" alt="Aucune image" class="product-image">`;
+          }
+
+          productDetails.innerHTML = `
+            ${imagesHTML}
+            <div class="product-info">
+              <h3>${productData.name}</h3>
+              <p class="product-description">${productData.description}</p>
+              <p class="product-category">Catégorie : ${productData.category}</p>
+              <p class="product-subcategory">Sous-catégorie : ${productData.subcategory}</p>
+              <p class="product-price">Prix : ${parseFloat(productData.price).toFixed(2)} €</p>
+            </div>`;
+
+          initCarousel();
+        } else {
+          alert("Produit non trouvé !");
+        }
+      } catch (error) {
+        console.error("Erreur récupération produit :", error);
+        alert("Erreur lors de la récupération des détails du produit.");
+      }
+    }
+
+    function initCarousel() {
+      const track = document.querySelector('.carousel-track');
+      if (!track) return;
+
+      const slides = Array.from(track.children);
+      const nextButton = document.querySelector('.carousel-button.next');
+      const prevButton = document.querySelector('.carousel-button.prev');
+      let currentIndex = 0;
+
+      function updateCarousel() {
+        const slideWidth = slides[0].getBoundingClientRect().width;
+        track.style.transform = `translateX(-${slideWidth * currentIndex}px)`;
+      }
+
+      nextButton.addEventListener('click', () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        updateCarousel();
+      });
+
+      prevButton.addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        updateCarousel();
+      });
+
+      window.addEventListener('resize', updateCarousel);
+      updateCarousel();
+    }
+
+    document.getElementById("orderButton").addEventListener("click", function () {
+      document.getElementById("orderPopup").style.display = "flex";
+    });
+
+    document.getElementById("submitOrder").addEventListener("click", function () {
+      const name = document.getElementById("name").value;
+      const surname = document.getElementById("surname").value;
+      const email = document.getElementById("email").value;
+      const phone = document.getElementById("phone").value;
+
+      if (name && surname && email && phone) {
+        showConfirmationPopup();
+      } else {
+        alert("Veuillez remplir tous les champs.");
+      }
+    });
+
+    function showConfirmationPopup() {
+      document.getElementById("orderPopup").style.display = "none";
+
+      let imageURL = "https://via.placeholder.com/300x200?text=Pas+d'image";
+      if (Array.isArray(productData.images) && productData.images.length > 0) {
+        imageURL = productData.images[0];
+      }
+
+      document.getElementById("confirmImage").src = imageURL;
+      document.getElementById("confirmName").textContent = `Nom : ${productData.name}`;
+      document.getElementById("confirmCategory").textContent = `Catégorie : ${productData.category}`;
+      document.getElementById("confirmSubcategory").textContent = `Sous-catégorie : ${productData.subcategory}`;
+      document.getElementById("confirmDescription").textContent = `Description : ${productData.description}`;
+      document.getElementById("confirmPrice").textContent = `Prix : ${parseFloat(productData.price).toFixed(2)} €`;
+
+      document.getElementById("confirmationPopup").style.display = "flex";
+    }
+
+    document.getElementById("confirmButton").addEventListener("click", function () {
+      const orderDetails = {
+        productId,
+        name: document.getElementById("name").value,
+        surname: document.getElementById("surname").value,
+        email: document.getElementById("email").value,
+        phone: document.getElementById("phone").value,
+        productName: productData.name,
+        productCategory: productData.category,
+        productSubcategory: productData.subcategory,
+        productPrice: parseFloat(productData.price).toFixed(2),
+      };
+
+      setDoc(doc(db, "commandes", productId), orderDetails)
+        .then(() => {
+          alert("Commande confirmée et envoyée !");
+
+          const emailParams = {
+            to_email: "docteurpc666@gmail.com",
+            from_name: orderDetails.name + " " + orderDetails.surname,
+            from_email: orderDetails.email,
+            reply_to: orderDetails.email,
+            product_name: orderDetails.productName,
+            product_category: orderDetails.productCategory,
+            product_subcategory: orderDetails.productSubcategory,
+            product_price: orderDetails.productPrice,
+            customer_phone: orderDetails.phone,
+          };
+
+          // Appel EmailJS
+          emailjs.send("service_ox0o5nz", "template_oyg7p9k", emailParams)
+            .then((response) => {
+              console.log('Email envoyé avec succès!', response.status, response.text);
+              window.location.href = "Produits.html";
+            }, (error) => {
+              console.error('Erreur lors de l\'envoi de l\'email...', error);
+              alert("Erreur lors de l'envoi de l'email.");
+            });
+        })
+        .catch((error) => {
+          console.error("Erreur lors de l'envoi de la commande :", error);
+          alert("Erreur lors de l'envoi de la commande.");
+        });
+    });
+
+    document.getElementById("cancelButton").addEventListener("click", function () {
+      document.getElementById("confirmationPopup").style.display = "none";
+    });
+
+    window.addEventListener("click", function (event) {
+      if (event.target === document.getElementById("orderPopup")) {
+        document.getElementById("orderPopup").style.display = "none";
+      }
+      if (event.target === document.getElementById("confirmationPopup")) {
+        document.getElementById("confirmationPopup").style.display = "none";
+      }
+    });
+
+    getProductDetails();
+
+    // ⚡ Initialisation EmailJS
+    emailjs.init("gvYaxYkO7CBf54-6s"); // Remplace par ta clé publique EmailJS
+  </script>
+</body>
+</html>

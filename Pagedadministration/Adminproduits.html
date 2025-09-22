@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ajouter un Produit</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    /* Reset minimal */
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f0f2f5;
+      margin: 0;
+      padding: 0;
+      color: #333;
+    }
+
+    /* === NAVBAR === */
+    nav {
+      background: #007bff;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    nav .logo {
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 20px;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      display: inline;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    nav ul li a:hover {
+      color: #ffdd57;
+    }
+
+    /* MOBILE NAV */
+    @media (max-width: 768px) {
+      nav ul {
+        flex-direction: column;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background: #007bff;
+        width: 200px;
+        display: none;
+        padding: 10px;
+        border-radius: 0 0 8px 8px;
+      }
+      nav ul.show {
+        display: flex;
+      }
+      .menu-toggle {
+        display: block;
+        cursor: pointer;
+        font-size: 1.5rem;
+      }
+    }
+
+    @media (min-width: 769px) {
+      .menu-toggle {
+        display: none;
+      }
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #333;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .product-card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 10px;
+    }
+
+    .product-card h3 {
+      margin: 10px 0 6px;
+      font-size: 1.2rem;
+      color: #222;
+    }
+
+    .product-card p {
+      margin: 4px 0;
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .buttons {
+      margin-top: 12px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .buttons button {
+      flex: 1;
+      margin: 0 5px;
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .edit-btn {
+      background: #007bff;
+    }
+
+    .delete-btn {
+      background: #e74c3c;
+    }
+
+    .edit-btn:hover { background: #0056b3; }
+    .delete-btn:hover { background: #c0392b; }
+
+    /* Popup */
+    .popup {
+      display: none;
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.6);
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+   .popup-content {
+  background: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  width: 90%;
+  max-width: 500px;   /* réduit la largeur */
+  max-height: 90vh;   /* limite la hauteur du popup */
+  overflow-y: auto;   /* permet de scroller si contenu trop long */
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+}
+
+
+    .popup-content h3 {
+      margin-bottom: 15px;
+      color: #222;
+    }
+
+    .popup-content label {
+      font-weight: 600;
+      display: block;
+      margin-top: 12px;
+      margin-bottom: 6px;
+    }
+
+    .popup-content input,
+    .popup-content textarea,
+    .popup-content select {
+      width: 100%;
+      padding: 10px;
+      border: 1.5px solid #ccc;
+      border-radius: 8px;
+      margin-bottom: 12px;
+    }
+
+    .popup-content button {
+      padding: 10px 20px;
+      margin-top: 10px;
+      border: none;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .save-btn {
+      background: #28a745;
+      color: white;
+    }
+    .cancel-btn {
+      background: #aaa;
+      color: white;
+    }
+
+    .images-preview {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .images-preview div {
+      position: relative;
+    }
+
+    .images-preview img {
+      width: 100px;
+      height: 100px;
+      border-radius: 6px;
+      object-fit: cover;
+    }
+
+    .images-preview button {
+      position: absolute;
+      top: 5px;
+      right: 5px;
+      background: #e74c3c;
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      cursor: pointer;
+    }
+
+    /* === Tableau (PC) === */
+    .products-table {
+      display: none;
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+    .products-table th, .products-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+      font-size: 0.95rem;
+    }
+
+    .products-table th {
+      background: #007bff;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .products-table img {
+      width: 80px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .table-buttons button {
+      margin: 0 5px;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .table-buttons .edit-btn { background: #007bff; }
+    .table-buttons .delete-btn { background: #e74c3c; }
+
+    /* Responsive */
+    @media (min-width: 900px) {
+      .products-grid { display: none; }
+      .products-table { display: table; }
+    }
+  </style>
+   <script>
+    // Toggle menu mobile
+    function toggleMenu() {
+      document.getElementById("menu").classList.toggle("show");
+    }
+  </script>
+</head>
+<body>
+     <nav>
+<a href="Accueil.html" style="display: inline-flex; align-items: center; text-decoration: none; font-weight: bold; font-size: 1.6rem; gap: 10px;">
+  <img src="cromali.png" alt="Cro-Mali" style="width: 50px; height: auto;" />
+  <span>
+    <span style="color: #006400; letter-spacing: 2px;">CRO</span>
+    <span style="color: #32CD32; letter-spacing: 2px;">MALI</span>
+  </span>
+</a>
+    <div class="menu-toggle" onclick="toggleMenu()">☰</div>
+    <ul id="menu">
+      <li><a href="AdminServices.html">Services</a></li>
+      <li><a href="Adminproduits.html">Produits</a></li>
+      <li><a href="Admincommandes.html">Commandes</a></li>
+      <li><a href="pagedadministration.html">Administration</a></li>
+    </ul>
+  </nav>
+  <h2>Gestion des Produits</h2>
+  <div id="productsList" class="products-grid"></div>
+  <table id="productsTable" class="products-table"></table>
+
+  <!-- Popup Édition -->
+  <div id="editPopup" class="popup">
+    <div class="popup-content">
+      <h3>Modifier le produit</h3>
+      <form id="editForm">
+        <input type="hidden" id="editProductId" />
+        <label for="editName">Nom :</label>
+        <input type="text" id="editName" required />
+
+        <label for="editDescription">Description :</label>
+        <textarea id="editDescription" rows="3" required></textarea>
+
+        <label for="editPrice">Prix (€) :</label>
+        <input type="number" id="editPrice" step="0.01" required />
+
+        <label for="editCategory">Catégorie :</label>
+        <select id="editCategory" required>
+          <option value="">-- Choisissez une catégorie --</option>
+          <option value="Ordinateurs">Ordinateurs</option>
+          <option value="Composants">Composants</option>
+          <option value="Périphériques & Accessoires">Périphériques & Accessoires</option>
+          <option value="Stockage & Sauvegarde">Stockage & Sauvegarde</option>
+          <option value="Réseaux & Connectivité">Réseaux & Connectivité</option>
+        </select>
+
+        <label for="editSubcategory">Sous-catégorie :</label>
+        <select id="editSubcategory" required>
+          <option value="">-- Choisissez une sous-catégorie --</option>
+        </select>
+
+        <label>Images actuelles :</label>
+        <div id="currentImages" class="images-preview"></div>
+
+        <label for="newImages">Ajouter des images :</label>
+        <input type="file" id="newImages" multiple accept="image/*" />
+
+        <div style="margin-top: 15px; display: flex; justify-content: space-between;">
+          <button type="submit" class="save-btn">Enregistrer</button>
+          <button type="button" class="cancel-btn" onclick="closeEditPopup()">Annuler</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, doc, updateDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+    import { getStorage, ref as storageRef, uploadBytes, getDownloadURL, deleteObject } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDs-3TYY-ituu4GqtBbPdFzcH6XYkdEB3o",
+      authDomain: "maintenanceinformatique-d9b17.firebaseapp.com",
+      projectId: "maintenanceinformatique-d9b17",
+      storageBucket: "maintenanceinformatique-d9b17.firebasestorage.app",
+      messagingSenderId: "271885214932",
+      appId: "1:271885214932:web:e26b80eb6ff3dce0228741"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const storage = getStorage(app);
+
+    const productsList = document.getElementById('productsList');
+    const productsTable = document.getElementById('productsTable');
+    const editPopup = document.getElementById('editPopup');
+    const editForm = document.getElementById('editForm');
+    const currentImagesDiv = document.getElementById('currentImages');
+
+    let products = [];
+
+    // Catégories et sous-catégories
+    const categories = {
+      "Ordinateurs": [
+        "Ordinateurs portables",
+        "PC de bureau",
+        "Mini PC / All-in-one",
+        "Occasion / Reconditionnés"
+      ],
+      "Composants": [
+        "Processeurs (CPU)",
+        "Cartes mères",
+        "Cartes graphiques (GPU)",
+        "RAM",
+        "Disques durs & SSD",
+        "Alimentations",
+        "Boîtiers & Refroidissement"
+      ],
+      "Périphériques & Accessoires": [
+        "Claviers & Souris",
+        "Écrans / Moniteurs",
+        "Casques & enceintes",
+        "Imprimantes & scanners",
+        "Webcams & micros",
+        "Câbles & adaptateurs"
+      ],
+      "Stockage & Sauvegarde": [
+        "Disques externes",
+        "Clés USB",
+        "Cartes mémoire",
+        "Serveurs NAS"
+      ],
+      "Réseaux & Connectivité": [
+        "Routeurs & modems",
+        "Switchs",
+        "Clés Wi-Fi",
+        "Câbles Ethernet",
+        "Accessoires réseau"
+      ]
+    };
+
+    // Normalise product.images en tableau (évite l'erreur .forEach)
+    function normalizeImages(images) {
+      if (!images) return [];
+      if (Array.isArray(images)) return images;
+      if (typeof images === 'string') return [images];
+      if (typeof images === 'object') {
+        try {
+          const vals = Object.values(images).filter(v => typeof v === 'string');
+          if (vals.length) return vals;
+        } catch (e) {}
+      }
+      return [];
+    }
+
+    // Charger les produits
+    async function loadProducts() {
+      productsList.innerHTML = "";
+      productsTable.innerHTML = "";
+      const querySnapshot = await getDocs(collection(db, "produits"));
+      products = [];
+      querySnapshot.forEach((docSnap) => {
+        products.push({ id: docSnap.id, ...docSnap.data() });
+      });
+      renderProducts();
+    }
+
+    // Afficher les produits (cartes + tableau)
+    function renderProducts() {
+      productsList.innerHTML = "";
+
+      // cartes (mobile)
+      products.forEach(product => {
+        const imgs = normalizeImages(product.images);
+        const imageSrc = imgs[0] || "https://via.placeholder.com/300x200?text=Pas+d'image";
+
+        const card = document.createElement("div");
+        card.classList.add("product-card");
+        card.innerHTML = `
+          <img src="${imageSrc}" />
+          <h3>${product.name}</h3>
+          <p>${product.price} €</p>
+          <div class="buttons">
+            <button class="edit-btn" onclick="openEditPopup('${product.id}')">Modifier</button>
+            <button class="delete-btn" onclick="deleteProduct('${product.id}')">Supprimer</button>
+          </div>
+        `;
+        productsList.appendChild(card);
+      });
+
+      // tableau (PC)
+      const rows = products.map(p => {
+        const imgs = normalizeImages(p.images);
+        const imageSrc = imgs[0] || "https://via.placeholder.com/100x60?text=Pas+d'image";
+        return `
+          <tr>
+            <td><img src="${imageSrc}" /></td>
+            <td>${p.name}</td>
+            <td>${p.price} FCFA</td>
+            <td>${p.category || "-"}</td>
+            <td>${p.subcategory || "-"}</td>
+            <td class="table-buttons">
+              <button class="edit-btn" onclick="openEditPopup('${p.id}')">Modifier</button>
+              <button class="delete-btn" onclick="deleteProduct('${p.id}')">Supprimer</button>
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      productsTable.innerHTML = `
+        <thead>
+          <tr>
+            <th>Image</th><th>Nom</th><th>Prix</th><th>Catégorie</th><th>Sous-catégorie</th><th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows}
+        </tbody>
+      `;
+    }
+
+    // Ouvrir popup édition (accessible depuis le HTML via onclick)
+    window.openEditPopup = function (id) {
+      const product = products.find(p => p.id === id);
+      if (!product) return;
+
+      document.getElementById("editProductId").value = product.id;
+      document.getElementById("editName").value = product.name || "";
+      document.getElementById("editDescription").value = product.description || "";
+      document.getElementById("editPrice").value = product.price || "";
+
+      // Catégorie
+      const catSelect = document.getElementById("editCategory");
+      catSelect.value = product.category || "";
+      catSelect.dispatchEvent(new Event("change")); // pour remplir sous-catégories
+
+      // Sous-catégorie
+      document.getElementById("editSubcategory").value = product.subcategory || "";
+
+      // Images actuelles (normalisées)
+      currentImagesDiv.innerHTML = "";
+      const imgs = normalizeImages(product.images);
+      imgs.forEach((url) => {
+        const div = document.createElement("div");
+        div.innerHTML = `<img src="${url}" /><button type="button" onclick="removeImage('${product.id}', '${url}')">×</button>`;
+        currentImagesDiv.appendChild(div);
+      });
+
+      editPopup.style.display = "flex";
+    }
+
+    // Fermer popup
+    window.closeEditPopup = function () {
+      editPopup.style.display = "none";
+    }
+// Fermer popup si clic en dehors du contenu
+editPopup.addEventListener("click", (e) => {
+  if (e.target === editPopup) {
+    closeEditPopup();
+  }
+});
+
+    // Gestion du select catégorie -> sous-catégorie
+    document.getElementById("editCategory").addEventListener("change", function () {
+      const subSelect = document.getElementById("editSubcategory");
+      subSelect.innerHTML = `<option value="">-- Choisissez une sous-catégorie --</option>`;
+      const selected = this.value;
+      if (categories[selected]) {
+        categories[selected].forEach(sub => {
+          const opt = document.createElement("option");
+          opt.value = sub;
+          opt.textContent = sub;
+          subSelect.appendChild(opt);
+        });
+      }
+    });
+
+    // Sauvegarder les modifications
+    editForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const id = document.getElementById("editProductId").value;
+      const name = document.getElementById("editName").value;
+      const description = document.getElementById("editDescription").value;
+      const price = parseFloat(document.getElementById("editPrice").value);
+      const category = document.getElementById("editCategory").value;
+      const subcategory = document.getElementById("editSubcategory").value;
+      const product = products.find(p => p.id === id);
+
+      // images existantes normalisées
+      let images = normalizeImages(product.images);
+
+      // uploader nouvelles images si présentes
+      const newImages = document.getElementById("newImages").files;
+      for (let i = 0; i < newImages.length; i++) {
+        const file = newImages[i];
+        const fileName = `products/${Date.now()}_${file.name}`;
+        const imgRef = storageRef(storage, fileName);
+        const snapshot = await uploadBytes(imgRef, file);
+        const url = await getDownloadURL(snapshot.ref);
+        images.push(url);
+      }
+
+      await updateDoc(doc(db, "produits", id), {
+        name, description, price, category, subcategory, images
+      });
+
+      alert("Produit mis à jour !");
+      closeEditPopup();
+      loadProducts();
+    });
+
+    // Supprimer une image spécifique
+    window.removeImage = async function (productId, imageUrl) {
+      if (!confirm("Supprimer cette image ?")) return;
+      const product = products.find(p => p.id === productId);
+      if (!product) return;
+      const images = normalizeImages(product.images).filter(url => url !== imageUrl);
+
+      // Supprimer du Storage (si possible)
+      try {
+        const imgRef = storageRef(storage, imageUrl);
+        await deleteObject(imgRef);
+      } catch (err) {
+        console.warn("Erreur suppression storage :", err);
+      }
+
+      await updateDoc(doc(db, "produits", productId), { images });
+      alert("Image supprimée !");
+      loadProducts();
+    }
+
+    // Supprimer un produit
+    window.deleteProduct = async function (id) {
+      if (!confirm("Supprimer ce produit ?")) return;
+      const product = products.find(p => p.id === id);
+
+      // Supprimer les images du storage
+      for (let url of normalizeImages(product.images)) {
+        try {
+          const imgRef = storageRef(storage, url);
+          await deleteObject(imgRef);
+        } catch (err) {
+          console.warn("Erreur suppression storage :", err);
+        }
+      }
+
+      await deleteDoc(doc(db, "produits", id));
+      alert("Produit supprimé !");
+      loadProducts();
+    }
+
+    // initial load
+    loadProducts();
+  </script>
+</body>
+</html>
