@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="utf-8">
+    <title>AirCon - AC Repair Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Favicon -->
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;800&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- EmailJS Library -->
+
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+    <!-- Topbar Start -->
+    <div class="container-fluid bg-dark text-white-50 py-2 px-0 d-none d-lg-block">
+        <div class="row gx-0 align-items-center">
+            <div class="col-lg-7 px-5 text-start">
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="fa fa-phone-alt me-2"></small>
+                    <small>00223 84 80 71 54</small>
+                </div>
+                <div class="h-100 d-inline-flex align-items-center me-4">
+                    <small class="far fa-envelope-open me-2"></small>
+                    <small>docteurpc666@gmail.com</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Topbar End -->
+
+    <!-- Navbar Start -->
+    <nav class="navbar navbar-expand-lg bg-white navbar-light sticky-top px-4 px-lg-5">
+        <a href="index.html" class="navbar-brand d-flex align-items-center">
+            <h1 class="m-0"><img class="img-fluid me-3" src="img/Cro-Mali (2).png" alt="">CRO-MALI</h1>
+        </a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <div class="navbar-nav mx-auto bg-light pe-4 py-3 py-lg-0">
+                <a href="index.html" class="nav-item nav-link ">Accueil</a>
+                <a href="about.html" class="nav-item nav-link">A Propos</a>
+                <a href="service.html" class="nav-item nav-link">Nos Services</a>
+                <a href="Produits.html" class="nav-item nav-link">Nos Produits</a>
+                <a href="contact.html" class="nav-item nav-link active">Contactez Nous</a>
+            </div>
+            <div class="h-100 d-lg-inline-flex align-items-center d-none">
+                <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i class="fab fa-facebook-f"></i></a>
+                <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i class="fab fa-twitter"></i></a>
+                <a class="btn btn-square rounded-circle bg-light text-primary me-2" href=""><i class="fab fa-linkedin-in"></i></a>
+                <a class="btn btn-square rounded-circle bg-light text-primary me-0" href=""><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </nav>
+    <!-- Navbar End -->
+
+    <!-- Page Header Start -->
+    <div class="container-fluid page-header py-5 mb-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container text-center py-5">
+            <h1 class="display-4 text-white animated slideInDown mb-4">Contactez Nous</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb justify-content-center mb-0">
+                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                    <li class="breadcrumb-item"><a href="service.html">Services</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Contact</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <!-- Page Header End -->
+
+    <!-- Contact Start -->
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row g-5">
+                <!-- Texte + Formulaire -->
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.1s">
+                    <h1 class="display-6 mb-4">Une question ? Contactez-nous !</h1>
+                    <p class="mb-4 text-muted">
+                        Vous avez un problème informatique, une demande de devis ou besoin d’assistance ? N’hésitez pas à nous contacter. Nous vous répondrons dans les plus brefs délais.
+                    </p>
+
+                    <!-- Formulaire de contact -->
+                <form id="contactForm">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="name" placeholder="Votre nom" required>
+                <label for="name">Votre nom</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="email" class="form-control" id="email" placeholder="Votre email" required>
+                <label for="email">Votre email</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="tel" class="form-control" id="phone" placeholder="Votre numéro de téléphone" required>
+                <label for="phone">Votre numéro de téléphone</label>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-floating">
+                <input type="text" class="form-control" id="service" placeholder="Type de services" required>
+                <label for="service">Type de services</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="form-floating">
+                <textarea class="form-control" placeholder="Écrivez votre message ici..." id="message" style="height: 100px" required></textarea>
+                <label for="message">Message</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary py-3 px-5" type="submit">Envoyer</button>
+        </div>
+    </div>
+</form>
+
+                </div>
+
+                <!-- Google Map -->
+                <div class="col-lg-6 wow fadeIn" data-wow-delay="0.5s" style="min-height: 450px;">
+                    <div class="position-relative overflow-hidden h-100">
+                        <iframe class="position-relative w-100 h-100"
+                                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d12296.3641582914!2d-8.020540499999997!3d12.588400599999997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xe51cd101cd5cd4f%3A0x32491e0e27dbbe10!2sMarch%C3%A9%20de%20Guarantibougou!5e0!3m2!1sfr!2sml!4v1694184839209!5m2!1sfr!2sml"
+                                frameborder="0" style="min-height: 450px; border:0;" allowfullscreen="" aria-hidden="false"
+                                tabindex="0">
+                        </iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Contact End -->
+
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark footer mt-5 pt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <!-- Logo + Description -->
+                <div class="col-md-6">
+                    <h1 class="m-0 text-white">
+                        <img src="img/Cro-Mali (2).png" alt="Logo CRO-MALI" style="height: 120px; margin-right: 15px; vertical-align: middle; background-color: #f0f0f0; padding: 10px; border-radius: 8px;">
+                        CRO-MALI
+                    </h1>
+                    <span class="text-light">
+                        CRO-MALI est votre partenaire de confiance pour la maintenance, la réparation et la sécurité informatique. Nous intervenons rapidement pour les particuliers et les entreprises, avec des solutions fiables et professionnelles.
+                    </span>
+                </div>
+
+                <!-- Newsletter -->
+                <div class="col-md-6">
+                    <h5 class="text-light mb-4">Inscrivez-vous à notre newsletter</h5>
+                    <p class="text-light">Recevez les dernières astuces, mises à jour et offres exclusives liées à la maintenance informatique.</p>
+                    <div class="position-relative">
+                        <input class="form-control bg-transparent w-100 py-3 ps-4 pe-5" type="text" placeholder="Votre email">
+                        <button type="button" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">S'inscrire</button>
+                    </div>
+                </div>
+
+                <!-- Contact info -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Contactez-nous</h5>
+                    <p class="text-light"><i class="fa fa-map-marker-alt me-3"></i>Guanrantiguibougou, Bamako, Mali</p>
+                    <p class="text-light"><i class="fa fa-phone-alt me-3"></i>+223 84 80 71 54</p>
+                    <p class="text-light"><i class="fa fa-envelope me-3"></i>docteurpc666@gmail.com</p>
+                </div>
+
+                <!-- Nos services -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Nos services</h5>
+                    <a class="btn btn-link" href="service.html">Maintenance informatique</a>
+                    <a class="btn btn-link" href="service.html">Dépannage PC/Mac</a>
+                    <a class="btn btn-link" href="service.html">Installation de logiciels</a>
+                    <a class="btn btn-link" href="service.html">Récupération de données</a>
+                    <a class="btn btn-link" href="service.html">Nettoyage de virus</a>
+                </div>
+
+                <!-- Liens utiles -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Liens utiles</h5>
+                    <a class="btn btn-link" href="about.html">À propos</a>
+                    <a class="btn btn-link" href="contact.html">Nous contacter</a>
+                    <a class="btn btn-link" href="index.html">Accueil</a>
+                    <a class="btn btn-link" href="Produits.html">Nos Produits</a>
+                </div>
+
+                <!-- Réseaux sociaux -->
+                <div class="col-lg-3 col-md-6">
+                    <h5 class="text-light mb-4">Suivez-nous</h5>
+                    <div class="d-flex">
+                        <a class="btn btn-square rounded-circle me-1" href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a class="btn btn-square rounded-circle me-1" href="#"><i class="fab fa-twitter"></i></a>
+                        <a class="btn btn-square rounded-circle me-1" href="#"><i class="fab fa-linkedin-in"></i></a>
+                        <a class="btn btn-square rounded-circle me-1" href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="container-fluid copyright bg-secondary py-3">
+            <div class="container d-flex flex-column flex-md-row justify-content-between text-center text-md-start">
+                <div class="mb-2 mb-md-0 text-light">
+                    &copy; <a class="text-primary" href="#">CRO-MALI</a>, Tous droits réservés.
+                </div>
+                <div class="text-light">
+                    Conception par <a class="text-primary" href="#">CRO-MALI</a> |
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+    <!-- Back to Top -->
+    <!-- Autres scripts -->
+   <!-- Importation de la dernière version du SDK EmailJS -->
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+
+<!-- Autres scripts nécessaires -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/counterup/counterup.min.js"></script>
+<script src="lib/parallax/parallax.min.js"></script>
+
+<!-- Ton fichier JavaScript principal -->
+<script type="module" src="js/main.js"></script>
+
+</body>
+
+</html>

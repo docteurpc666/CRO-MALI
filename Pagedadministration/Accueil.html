@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <title>Accueil Administrateur - Cro-Mali</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #f4f6f9, #e9eef5);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* HEADER */
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      animation: fadeIn 2s ease forwards;
+    }
+    header img {
+      height: 110px;
+      margin-bottom: 20px;
+      animation: zoomIn 1.5s ease forwards;
+    }
+    header h1 {
+      font-size: 2.8rem;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: slideDown 2s ease forwards 0.5s;
+    }
+    header p.typewriter {
+      font-size: 1.2rem;
+      color: #444;
+      border-right: 3px solid #007bff;
+      white-space: nowrap;
+      overflow: hidden;
+      width: 0;
+      margin: 0 auto;
+      animation: typing 4s steps(40, end) forwards 1s, blink 0.7s infinite;
+    }
+
+    @keyframes fadeIn { from {opacity: 0;} to {opacity: 1;} }
+    @keyframes zoomIn { from {transform: scale(0.5);} to {transform: scale(1);} }
+    @keyframes slideDown { from {transform: translateY(-30px); opacity: 0;} to {transform: translateY(0); opacity: 1;} }
+    @keyframes typing { from { width: 0; } to { width: 100%; } }
+    @keyframes blink { 50% { border-color: transparent; } }
+
+    /* CARDS GRID */
+    .sections {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+      padding: 60px 20px;
+    }
+    .card {
+      perspective: 1000px;
+      cursor: pointer;
+    }
+    .card-inner {
+      position: relative;
+      width: 100%;
+      height: 220px;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+    .card:hover .card-inner { transform: rotateY(180deg); }
+    .card-front, .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 15px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card-front {
+      background: white;
+      color: #007bff;
+      font-size: 1.5rem;
+      font-weight: bold;
+    }
+    .card-back {
+      background: #007bff;
+      color: white;
+      transform: rotateY(180deg);
+      text-align: center;
+    }
+    .card-back button {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      color: #007bff;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .card-back button:hover { background: #e6e6e6; }
+
+    /* ADMIN GUIDE */
+    .guide {
+      background: #fff;
+      padding: 40px 20px;
+      margin: 40px 20px;
+      border-radius: 15px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 2s ease forwards;
+    }
+    .guide h2 {
+      text-align: center;
+      color: #007bff;
+      margin-bottom: 25px;
+    }
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+    .step {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: #f8faff;
+      padding: 15px;
+      border-left: 6px solid #007bff;
+      border-radius: 10px;
+      animation: slideDown 1.5s ease;
+    }
+    .step span {
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #0056b3;
+    }
+
+    /* FOOTER */
+    footer {
+      text-align: center;
+      padding: 20px;
+      font-size: 0.9rem;
+      color: #666;
+      background: #fafafa;
+      border-top: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header>
+<img src="cromali.png" alt="Cro-Mali" />
+    <h1>Bienvenue Administrateur</h1>
+    <p class="typewriter">Votre mission : gérer, organiser et sécuriser Cro-Mali Informatique 🚀</p>
+  </header>
+
+  <!-- SECTIONS ADMIN -->
+  <main class="sections">
+    <div class="card" onclick="window.location.href='AdminServices.html'">
+      <div class="card-inner">
+        <div class="card-front">📋 Services</div>
+        <div class="card-back">
+          <p>Consultez et gérez les demandes clients.</p>
+          <button>Accéder</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="window.location.href='Adminproduits.html'">
+      <div class="card-inner">
+        <div class="card-front">🛒 Produits</div>
+        <div class="card-back">
+          <p>Ajoutez, modifiez et supprimez des produits.</p>
+          <button>Accéder</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="window.location.href='Admincommandes.html'">
+      <div class="card-inner">
+        <div class="card-front">📦 Commandes</div>
+        <div class="card-back">
+          <p>Suivez et validez les commandes clients.</p>
+          <button>Accéder</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="card" onclick="window.location.href='pagedadministration.html'">
+      <div class="card-inner">
+        <div class="card-front">👥 Admins</div>
+        <div class="card-back">
+          <p>Gérez les comptes administrateurs et leurs rôles.</p>
+          <button>Accéder</button>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- GUIDE ADMIN -->
+  <section class="guide">
+    <h2>📘 Guide Administrateur</h2>
+    <div class="steps">
+      <div class="step"><span>1.</span> Vérifiez chaque jour les demandes de services urgentes.</div>
+      <div class="step"><span>2.</span> Maintenez à jour le catalogue produits avec des informations fiables.</div>
+      <div class="step"><span>3.</span> Assurez-vous que les commandes soient traitées rapidement.</div>
+      <div class="step"><span>4.</span> Protégez l’accès administrateur et révisez les rôles régulièrement.</div>
+      <div class="step"><span>5.</span> Inspirez confiance : chaque action contribue à la réputation de Cro-Mali 💡.</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    © 2025 Cro-Mali Informatique - Interface Administrateur
+  </footer>
+</body>
+</html>
