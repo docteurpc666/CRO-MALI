@@ -1,0 +1,16 @@
+{
+  "name": "maintenanceinformatique-copy",
+  "version": "1.0.0",
+  "main": "firebase.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+   "predeploy": "echo 'No build required'",
+  "deploy": "gh-pages -d ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
